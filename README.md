@@ -1,0 +1,2 @@
+# News_Collections
+借助jieba工具将数据库对应的数据进行分词并存储
