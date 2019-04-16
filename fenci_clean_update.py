@@ -34,10 +34,10 @@ for x in myresult:
     abstract=re.sub(r4,'',abstract)
     
     seg_list = jieba.cut(title, cut_all=False) # 分词精确模式
-    title="/".join(seg_list)
+    title=" ".join(seg_list)
 
     seg_list = jieba.cut(abstract, cut_all=False)
-    abstract="/".join(seg_list)
+    abstract=" ".join(seg_list)
 
     sql="UPDATE fenci SET title = %s, abstract = %s WHERE id = %s"
     val=(title,abstract,id)
