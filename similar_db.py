@@ -18,7 +18,7 @@ mycursor.execute("SELECT id,title,abstract FROM fenci")
 
 myresult=mycursor.fetchall()
 
-datanum=20
+datanum=100
 i=0
 data=[]
 for x in myresult:
@@ -60,18 +60,19 @@ for x in range(0,datanum):
         if x==y:
             continue
         res=tf_similarity(data[x],data[y])
-        if res>0:
-            # print(data[x])
-            # print(data[y])
+        if res>0.4:
+            print(data[x])
+            print(data[y])
             result[x][y]=res
-            # print(x," ",y," ",res)
+            print(x," ",y," ",res)
 
-print("    ",end='')
-for i in range(0,datanum):
-  print("%6d"%(i),end='')
-print()
-for x in range(0,datanum):
-    print("%4d "%(x),end='')
-    for y in range (0,datanum):
-        print("%5.2f "%(result[x][y]),end='')
-    print()
+#打印相似度二维数组
+# print("    ",end='')
+# for i in range(0,datanum):
+#   print("%6d"%(i),end='')
+# print()
+# for x in range(0,datanum):
+#     print("%4d "%(x),end='')
+#     for y in range (0,datanum):
+#         print("%5.2f "%(result[x][y]),end='')
+#     print()
