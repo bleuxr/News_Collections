@@ -15,21 +15,35 @@ mydb = mysql.connector.connect(
 
 mycursor=mydb.cursor()
 
-mycursor.execute("SELECT id,abstract FROM information_news_tech LIMIT 0,1000")
+categories=["时尚","财经","游戏","体育","科技"]
+querys=["fashion","finance","game","sport","tech"]
 
-myresult=mycursor.fetchall()
+f_train = open('cnews/cnews.train.txt', 'w', encoding='utf-8')
+f_test = open('cnews/cnews.test.txt', 'w', encoding='utf-8')
+f_val = open('cnews/cnews.val.txt', 'w', encoding='utf-8')
 
-categories="科技"
 
-i=0
-for x in myresult:
-  i=i+1
-  #train
-  # if i>0 and i<=800:
-  #val
-  # if i>800 and i<=900:
-  #test
-  if i>900 and i<=1000:
-    if x[1] == "":
+for x in range(0,5):
+  mycursor.execute("SELECT id,abstract FROM information_news_"+querys[x]+" LIMIT 0,10000")
+  myresult=mycursor.fetchall()
+  count=0
+  for res in myresult:
+    if res[1]=="":
       continue
-    print(categories+"   "+x[1])
+    else:
+      count=count+1
+    print(count)
+    # train 1000, test 200, val 100
+    if count <= 1000:
+      f_train.write(categories[x]+'\t'+res[1]+'\n')
+    elif count <= 1200:
+      f_test.write(categories[x]+'\t'+res[1]+'\n')
+    elif count <= 1300:
+      f_val.write(categories[x]+'\t'+res[1]+'\n')
+    else:
+      break
+
+
+f_train.close()
+f_test.close()
+f_val.close()
